@@ -43,7 +43,6 @@
             height: 100%;
             width: 0;
 
-            /* filter: blur(4px) brightness(50%); */
             opacity: 0.2;
 
             transition: all 1s ease;
@@ -52,7 +51,6 @@
         .slide-selected {
             flex: 1;
 
-            /* filter: blur(0px); */
             z-index: 1;
 
             opacity: 1;
@@ -84,6 +82,12 @@
             opacity: 1;
         }
 
+        @media screen and (max-width: 800px) {
+                .controlls:hover {
+                opacity: 0;
+            }
+        }
+
         .ctrl {
             height: 100%;
             min-width: 30%;
@@ -111,7 +115,7 @@
             cursor: pointer;
         }
 
-        .bottom-line {
+        .bottom-line-container {
             height: 2px;
             width: 100%;
 
@@ -119,7 +123,37 @@
             bottom: 0;
             z-index: 2;
 
+            background-color: #111;
+        }
+
+        .bottom-line {
+            height: 100%;
+            width: 0%;
+
             background-color: #FFC700;
+
+            transition: width 1s ease;
+        }
+
+        .dev-footer {
+            margin-top: 1rem;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dev-version {
+            color: white; font-size: 1.5rem;
+        }
+
+        .dev-subversion {
+            font-size: 1rem; color: #999;
+        }
+
+        .dev-source {
+            color: #aaa;
+            font-size: 1.5rem;
         }
     </style>
 </head>
@@ -133,10 +167,12 @@
             <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;"></div>
         </div>
         <div class="controlls" id="controlls">
-            <div class="ctrl ctrl-backw" id="btn_back"><p>Назад</p></div>
-            <div class="ctrl ctrl-forw" id="btn_forw"><p>Вперед</p></div>
+            <div class="ctrl ctrl-backw" id="btn_back">Назад</div>
+            <div class="ctrl ctrl-forw" id="btn_forw">Вперед</div>
         </div>
-        <div class="bottom-line"></div>
+        <div class="bottom-line-container">
+            <div class="bottom-line" id="bottom_line"></div>
+        </div>
         <script>
             var btn_back;
             var btn_forw;
@@ -149,6 +185,8 @@
 
             var controlls;
             var auto_slide;
+
+            var bottom_line;
 
             function set_nav_lock() {
                 nav_lock = true;
@@ -184,6 +222,21 @@
                     slides[i].classList.remove("slide-selected");
                 }
                 slides[current_slide].classList.add("slide-selected")
+
+                if (current_slide === 0) {
+                    btn_back.innerHTML = "В конец";
+                } else {
+                    btn_back.innerHTML = "Назад";
+                }
+
+                if (current_slide === slides.length - 1) {
+                    btn_forw.innerHTML = "В начало";
+                } else {
+                    btn_forw.innerHTML = "Вперед";
+                }
+
+                let line_part_width = 1 / (slides.length - 1) * 100;
+                bottom_line.style.width = current_slide * line_part_width + "%";
             }
 
             function start_auto_slide() {
@@ -206,6 +259,8 @@
 
                 controlls = document.querySelector("#controlls");
 
+                bottom_line = document.querySelector("#bottom_line");
+
                 btn_back.addEventListener('click', () => backward());
                 btn_forw.addEventListener('click', () => forward());
 
@@ -218,7 +273,10 @@
             }
         </script>
     </div>
-    <p style="color: white; font-size: 1.5rem; margin-top: 1rem;">v1.01 0</p>
+    <div class="dev-footer">
+        <p class="dev-version">v1.02 <span class="dev-subversion">0</span></p>
+        <a class="dev-source" href="https://github.com/KostarSf/web_slider">source</a>
+    </div>
 
 </body>
 </html>
