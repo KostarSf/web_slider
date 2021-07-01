@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 10pt;
+            font-family: "Roboto", sans-serif;
+        }
+
+        body {
+            background-color: black;
+            padding: 1rem;
+        }
+
+        .slider {
+            height: 500px;
+
+            position: relative;
+            overflow: hidden;
+
+            background-color: #2b2b2b;
+            border-radius: 0.5rem 0.5rem 0 0;
+
+        }
+
+        .slides {
+            height: 100%;
+            display: flex;
+        }
+
+        .slide {
+            height: 100%;
+            width: 0rem;
+
+            filter: blur(4px) brightness(50%);
+
+            transition: all 1s ease;
+        }
+
+        .slide-selected {
+            flex: 1;
+
+            filter: blur(0px);
+            z-index: 1;
+
+            box-shadow: 0 0 10px 5px #0005;
+
+            transition: all 1s ease;
+        }
+
+        .controlls {
+            position: absolute;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: 2;
+            user-select: none;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            opacity: 0;
+
+            transition: all 0.2s ease;
+        }
+
+        .controlls:hover {
+            opacity: 1;
+        }
+
+        .ctrl {
+            height: 100%;
+            min-width: 30%;
+
+            display: flex;
+            align-items: center;
+
+            padding: 3rem;
+
+            color: #fffd;
+            font-size: 2rem;
+            text-shadow: 0 1px 1px #000a;
+
+            transition: all 0.2s ease;
+        }
+
+        .ctrl-forw {
+            flex-direction: row-reverse;
+        }
+
+        .ctrl:hover {
+            padding: 2rem;
+            color: #FFC700;
+
+            cursor: pointer;
+        }
+
+        .bottom-line {
+            height: 2px;
+            width: 100%;
+
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+
+            background-color: #FFC700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider">
+        <div class="slides">
+            <div class="slide slide-1 slide-selected" style="background: url(pic1.jpeg) center; background-size: cover;"></div>
+            <div class="slide slide-2" style="background: url(pic2.jpeg) center; background-size: cover;"></div>
+            <div class="slide slide-3" style="background: url(pic3.jpeg) center; background-size: cover;"></div>
+            <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;"></div>
+        </div>
+        <div class="controlls">
+            <div class="ctrl ctrl-backw" id="btn_back"><p>Назад</p></div>
+            <div class="ctrl ctrl-forw" id="btn_forw"><p>Вперед</p></div>
+        </div>
+        <div class="bottom-line"></div>
+        <script>
+            var btn_back;
+            var btn_forw;
+
+            var slides;
+            var current_slide = 0;
+
+            var nav_lock = false;
+            var delay_timer;
+
+            function set_nav_lock() {
+                nav_lock = true;
+                delay_timer = setTimeout(() => { nav_lock = false }, 750);
+            }
+
+            function forward() {
+                if (nav_lock) return;
+                set_nav_lock();
+
+                if (current_slide + 1 < slides.length) {
+                    current_slide++;
+                } else {
+                    current_slide = 0;
+                }
+                display_current_slide();
+            }
+
+            function backward() {
+                if (nav_lock) return;
+                set_nav_lock();
+
+                if (current_slide === 0) {
+                    current_slide = slides.length - 1;
+                } else {
+                    current_slide--;
+                }
+                display_current_slide();
+            }
+
+            function display_current_slide() {
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].classList.remove("slide-selected");
+                }
+                slides[current_slide].classList.add("slide-selected")
+            }
+
+            window.onload = () => {
+                btn_back = document.querySelector("#btn_back");
+                btn_forw = document.querySelector("#btn_forw");
+
+                slides = document.getElementsByClassName("slide");
+
+                btn_back.addEventListener('click', () => backward());
+                btn_forw.addEventListener('click', () => forward());
+
+                display_current_slide();
+            }
+        </script>
+    </div>
+
+</body>
+</html>
