@@ -45,6 +45,10 @@
 
             opacity: 0.2;
 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
             transition: all 1s ease;
         }
 
@@ -57,6 +61,51 @@
             box-shadow: 0 0 10px 5px #0005;
 
             transition: all 1s ease;
+        }
+
+        .slide-title {
+            padding: 3rem 4rem;
+            opacity: 0;
+
+            position: absolute;
+            top: -100%;
+
+            font-size: 3rem;
+            font-family: Rubik, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            color: white;
+            text-shadow: 0 1px 1px #000a;
+
+            transition: opacity, top 0.8s ease;
+        }
+
+        .slide-text {
+            padding: 1.5rem 4rem 3rem;
+            opacity: 0;
+
+            position: absolute;
+            bottom: -100%;
+
+            background-color: #0008;
+
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .slide-selected .slide-title {
+            top: 0;
+            opacity: 1;
+
+            transition: opacity, top 0.8s ease;
+        }
+
+        .slide-selected .slide-text {
+            opacity: 1;
+            bottom: 0;
+
+            transition: opacity, bottom 1.2s ease;
+            transition-delay: 0.5s;
         }
 
         .controlls {
@@ -161,10 +210,20 @@
 
     <div class="slider">
         <div class="slides">
-            <div class="slide slide-1 slide-selected" style="background: url(pic1.jpeg) center; background-size: cover;"></div>
-            <div class="slide slide-2" style="background: url(pic2.jpeg) center; background-size: cover;"></div>
-            <div class="slide slide-3" style="background: url(pic3.jpeg) center; background-size: cover;"></div>
-            <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;"></div>
+            <div class="slide slide-1 slide-selected" style="background: url(pic1.jpeg) center; background-size: cover;">
+                <p class="slide-title">Заголовок слайда</p>
+                <p class="slide-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo doloremque, unde impedit tenetur quam aliquam aspernatur officiis perspiciatis ad maxime, culpa omnis debitis eaque saepe suscipit sunt molestias, sint sed.</p>
+            </div>
+            <div class="slide slide-2" style="background: url(pic2.jpeg) center; background-size: cover;">
+                <p class="slide-title">Слайд 2</p>
+                <p class="slide-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ullam similique adipisci, beatae repellat consequatur quasi fuga, necessitatibus quos, architecto cumque ipsam aspernatur consectetur omnis nam vitae ut autem ducimus.</p>
+            </div>
+            <div class="slide slide-3" style="background: url(pic3.jpeg) center; background-size: cover;">
+                <p class="slide-title">Слайд 3</p>
+            </div>
+            <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;">
+                <p class="slide-title">Noragami Aragoto</p>
+            </div>
         </div>
         <div class="controlls" id="controlls">
             <div class="ctrl ctrl-backw" id="btn_back">Назад</div>
@@ -240,7 +299,7 @@
             }
 
             function start_auto_slide() {
-                auto_slide = setInterval(() => forward(), 7000);
+                auto_slide = setInterval(() => forward(), 10000);
             }
 
             function mouse_enter() {
@@ -274,7 +333,7 @@
         </script>
     </div>
     <div class="dev-footer">
-        <p class="dev-version">v1.02 <span class="dev-subversion">0</span></p>
+        <p class="dev-version">v1.03 <span class="dev-subversion">0</span></p>
         <a class="dev-source" href="https://github.com/KostarSf/web_slider">source</a>
     </div>
 
