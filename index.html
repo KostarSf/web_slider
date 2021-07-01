@@ -43,7 +43,7 @@
             height: 100%;
             width: 0rem;
 
-            filter: blur(4px) brightness(50%);
+            /* filter: blur(4px) brightness(50%); */
 
             transition: all 1s ease;
         }
@@ -51,7 +51,7 @@
         .slide-selected {
             flex: 1;
 
-            filter: blur(0px);
+            /* filter: blur(0px); */
             z-index: 1;
 
             box-shadow: 0 0 10px 5px #0005;
@@ -185,7 +185,7 @@
             }
 
             function start_auto_slide() {
-                auto_slide = setInterval(() => forward(), 10000);
+                auto_slide = setInterval(() => forward(), 7000);
             }
 
             function mouse_enter() {
@@ -216,7 +216,7 @@
             }
         </script>
     </div>
-    <p style="color: white; font-size: 1.5rem; margin-top: 1rem;">v1.00</p>
+    <p style="color: white; font-size: 1.5rem; margin-top: 1rem;">v1.00 1</p>
 
 </body>
 </html>
