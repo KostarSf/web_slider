@@ -130,7 +130,7 @@
             <div class="slide slide-3" style="background: url(pic3.jpeg) center; background-size: cover;"></div>
             <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;"></div>
         </div>
-        <div class="controlls">
+        <div class="controlls" id="controlls">
             <div class="ctrl ctrl-backw" id="btn_back"><p>Назад</p></div>
             <div class="ctrl ctrl-forw" id="btn_forw"><p>Вперед</p></div>
         </div>
@@ -144,6 +144,9 @@
 
             var nav_lock = false;
             var delay_timer;
+
+            var controlls;
+            var auto_slide;
 
             function set_nav_lock() {
                 nav_lock = true;
@@ -181,19 +184,39 @@
                 slides[current_slide].classList.add("slide-selected")
             }
 
+            function start_auto_slide() {
+                auto_slide = setInterval(() => forward(), 10000);
+            }
+
+            function mouse_enter() {
+                clearInterval(auto_slide);
+            }
+
+            function mouse_leave() {
+                start_auto_slide();
+            }
+
             window.onload = () => {
                 btn_back = document.querySelector("#btn_back");
                 btn_forw = document.querySelector("#btn_forw");
 
                 slides = document.getElementsByClassName("slide");
 
+                controlls = document.querySelector("#controlls");
+
                 btn_back.addEventListener('click', () => backward());
                 btn_forw.addEventListener('click', () => forward());
 
+                controlls.addEventListener('mouseover', () => mouse_enter());
+                controlls.addEventListener('mouseout', () => mouse_leave());
+
                 display_current_slide();
+
+                start_auto_slide();
             }
         </script>
     </div>
+    <p style="color: white; font-size: 1.5rem; margin-top: 1rem;">v1.00</p>
 
 </body>
 </html>
