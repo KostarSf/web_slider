@@ -23,8 +23,14 @@
             padding: 1rem;
         }
 
+        .wrapper {
+            max-width: 1000px;
+            margin: auto;
+        }
+
         .slider {
-            height: 500px;
+            max-width: 1000px;
+            height: 600px;
 
             position: relative;
             overflow: hidden;
@@ -245,135 +251,139 @@
 </head>
 <body>
 
-    <div class="slider">
-        <div class="slides">
-            <div class="slide slide-3 slide-selected" style="background: url(pic3.jpeg) center; background-size: cover;">
-                <p class="slide-title title-gradient title-center">Широкие возможности</p>
-                <p class="slide-text">Узнайте о самых передовых технологиях в сфере IT</p>
+    <div class="wrapper">
+        <div class="slider">
+            <div class="slides">
+                <div class="slide slide-3 slide-selected" style="background: url(pic3.jpeg) center; background-size: cover;">
+                    <p class="slide-title title-gradient title-center">Широкие возможности</p>
+                    <p class="slide-text">Узнайте о самых передовых технологиях в сфере IT</p>
+                </div>
+                <div class="slide slide-1" style="background: url(pic1.jpeg) center; background-size: cover;">
+                    <p class="slide-title title-right">Онлайн обучение</p>
+                    <p class="slide-text text-40r">Изучайте новые для себя направления, оставаясь в домашней атмосфере</p>
+                </div>
+                <div class="slide slide-2" style="background: url(pic2.jpeg) center; background-size: cover;">
+                    <p class="slide-title title-gradient">Доступные вакансии</p>
+                    <p class="slide-text text-right text-38r">Если в Вас витает творческий потенциал, мы рады видеть Вас в нашей
+                        команде</p>
+                </div>
+                <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;">
+                    <p class="slide-title title-gradient">Новые горизонты</p>
+                    <p class="slide-text text-right text-38r">Начните обучение уже сейчас и станье востребованным
+                        профессионалом!</p>
+                </div>
             </div>
-            <div class="slide slide-1" style="background: url(pic1.jpeg) center; background-size: cover;">
-                <p class="slide-title title-right">Онлайн обучение</p>
-                <p class="slide-text text-40r">Изучайте новые для себя направления, оставаясь в домашней атмосфере</p>
+            <div class="controlls" id="controlls">
+                <div class="ctrl ctrl-backw" id="btn_back">Назад</div>
+                <div class="ctrl ctrl-forw" id="btn_forw">Вперед</div>
             </div>
-            <div class="slide slide-2" style="background: url(pic2.jpeg) center; background-size: cover;">
-                <p class="slide-title title-gradient">Доступные вакансии</p>
-                <p class="slide-text text-right text-38r">Если в Вас витает творческий потенциал, мы рады видеть Вас в нашей команде</p>
+            <div class="bottom-line-container">
+                <div class="bottom-line" id="bottom_line"></div>
             </div>
-            <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;">
-                <p class="slide-title title-gradient">Новые горизонты</p>
-                <p class="slide-text text-right text-38r">Начните обучение уже сейчас и станье востребованным профессионалом!</p>
-            </div>
+            <script>
+                var btn_back;
+                var btn_forw;
+
+                var slides;
+                var current_slide = 0;
+
+                var nav_lock = false;
+                var delay_timer;
+
+                var controlls;
+                var auto_slide;
+
+                var bottom_line;
+
+                function set_nav_lock() {
+                    nav_lock = true;
+                    delay_timer = setTimeout(() => { nav_lock = false }, 750);
+                }
+
+                function forward() {
+                    if (nav_lock) return;
+                    set_nav_lock();
+
+                    if (current_slide + 1 < slides.length) {
+                        current_slide++;
+                    } else {
+                        current_slide = 0;
+                    }
+                    display_current_slide();
+                }
+
+                function backward() {
+                    if (nav_lock) return;
+                    set_nav_lock();
+
+                    if (current_slide === 0) {
+                        current_slide = slides.length - 1;
+                    } else {
+                        current_slide--;
+                    }
+                    display_current_slide();
+                }
+
+                function display_current_slide() {
+                    for (let i = 0; i < slides.length; i++) {
+                        slides[i].classList.remove("slide-selected");
+                    }
+                    slides[current_slide].classList.add("slide-selected")
+
+                    if (current_slide === 0) {
+                        btn_back.innerHTML = "В конец";
+                    } else {
+                        btn_back.innerHTML = "Назад";
+                    }
+
+                    if (current_slide === slides.length - 1) {
+                        btn_forw.innerHTML = "В начало";
+                    } else {
+                        btn_forw.innerHTML = "Вперед";
+                    }
+
+                    let line_part_width = 1 / (slides.length - 1) * 100;
+                    bottom_line.style.width = current_slide * line_part_width + "%";
+                }
+
+                function start_auto_slide() {
+                    auto_slide = setInterval(() => forward(), 20000);
+                }
+
+                function mouse_enter() {
+                    clearInterval(auto_slide);
+                }
+
+                function mouse_leave() {
+                    start_auto_slide();
+                }
+
+                window.onload = () => {
+                    btn_back = document.querySelector("#btn_back");
+                    btn_forw = document.querySelector("#btn_forw");
+
+                    slides = document.getElementsByClassName("slide");
+
+                    controlls = document.querySelector("#controlls");
+
+                    bottom_line = document.querySelector("#bottom_line");
+
+                    btn_back.addEventListener('click', () => backward());
+                    btn_forw.addEventListener('click', () => forward());
+
+                    controlls.addEventListener('mouseover', () => mouse_enter());
+                    controlls.addEventListener('mouseout', () => mouse_leave());
+
+                    display_current_slide();
+
+                    start_auto_slide();
+                }
+            </script>
         </div>
-        <div class="controlls" id="controlls">
-            <div class="ctrl ctrl-backw" id="btn_back">Назад</div>
-            <div class="ctrl ctrl-forw" id="btn_forw">Вперед</div>
+        <div class="dev-footer">
+            <p class="dev-version">v1.04 <span class="dev-subversion">3</span></p>
+            <a class="dev-source" href="https://github.com/KostarSf/web_slider">source</a>
         </div>
-        <div class="bottom-line-container">
-            <div class="bottom-line" id="bottom_line"></div>
-        </div>
-        <script>
-            var btn_back;
-            var btn_forw;
-
-            var slides;
-            var current_slide = 0;
-
-            var nav_lock = false;
-            var delay_timer;
-
-            var controlls;
-            var auto_slide;
-
-            var bottom_line;
-
-            function set_nav_lock() {
-                nav_lock = true;
-                delay_timer = setTimeout(() => { nav_lock = false }, 750);
-            }
-
-            function forward() {
-                if (nav_lock) return;
-                set_nav_lock();
-
-                if (current_slide + 1 < slides.length) {
-                    current_slide++;
-                } else {
-                    current_slide = 0;
-                }
-                display_current_slide();
-            }
-
-            function backward() {
-                if (nav_lock) return;
-                set_nav_lock();
-
-                if (current_slide === 0) {
-                    current_slide = slides.length - 1;
-                } else {
-                    current_slide--;
-                }
-                display_current_slide();
-            }
-
-            function display_current_slide() {
-                for (let i = 0; i < slides.length; i++) {
-                    slides[i].classList.remove("slide-selected");
-                }
-                slides[current_slide].classList.add("slide-selected")
-
-                if (current_slide === 0) {
-                    btn_back.innerHTML = "В конец";
-                } else {
-                    btn_back.innerHTML = "Назад";
-                }
-
-                if (current_slide === slides.length - 1) {
-                    btn_forw.innerHTML = "В начало";
-                } else {
-                    btn_forw.innerHTML = "Вперед";
-                }
-
-                let line_part_width = 1 / (slides.length - 1) * 100;
-                bottom_line.style.width = current_slide * line_part_width + "%";
-            }
-
-            function start_auto_slide() {
-                auto_slide = setInterval(() => forward(), 20000);
-            }
-
-            function mouse_enter() {
-                clearInterval(auto_slide);
-            }
-
-            function mouse_leave() {
-                start_auto_slide();
-            }
-
-            window.onload = () => {
-                btn_back = document.querySelector("#btn_back");
-                btn_forw = document.querySelector("#btn_forw");
-
-                slides = document.getElementsByClassName("slide");
-
-                controlls = document.querySelector("#controlls");
-
-                bottom_line = document.querySelector("#bottom_line");
-
-                btn_back.addEventListener('click', () => backward());
-                btn_forw.addEventListener('click', () => forward());
-
-                controlls.addEventListener('mouseover', () => mouse_enter());
-                controlls.addEventListener('mouseout', () => mouse_leave());
-
-                display_current_slide();
-
-                start_auto_slide();
-            }
-        </script>
-    </div>
-    <div class="dev-footer">
-        <p class="dev-version">v1.04 <span class="dev-subversion">2</span></p>
-        <a class="dev-source" href="https://github.com/KostarSf/web_slider">source</a>
     </div>
 
 </body>
