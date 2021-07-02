@@ -113,6 +113,14 @@
             align-self: flex-end;
         }
 
+        .text-40r {
+            max-width: 40rem;
+        }
+
+        .text-38r {
+            max-width: 38rem;
+        }
+
         .slide-selected .slide-title {
             top: 0;
             opacity: 1;
@@ -152,8 +160,13 @@
         }
 
         @media screen and (max-width: 800px) {
-                .controlls:hover {
+            .controlls:hover {
                 opacity: 0;
+            }
+
+            .slide-title {
+                padding: 2rem;
+                font-size: 2rem;
             }
         }
 
@@ -236,15 +249,15 @@
             </div>
             <div class="slide slide-1" style="background: url(pic1.jpeg) center; background-size: cover;">
                 <p class="slide-title title-right">Онлайн обучение</p>
-                <p class="slide-text">Изучайте новые для себя направления, <br> оставаясь в домашней атмосфере</p>
+                <p class="slide-text text-40r">Изучайте новые для себя направления, оставаясь в домашней атмосфере</p>
             </div>
             <div class="slide slide-2" style="background: url(pic2.jpeg) center; background-size: cover;">
                 <p class="slide-title title-gradient">Доступные вакансии</p>
-                <p class="slide-text text-right">Если в Вас витает творческий потенциал, <br> мы рады видеть Вас в нашей команде</p>
+                <p class="slide-text text-right text-38r">Если в Вас витает творческий потенциал, мы рады видеть Вас в нашей команде</p>
             </div>
             <div class="slide slide-4" style="background: url(pic4.jpeg) center; background-size: cover;">
                 <p class="slide-title title-gradient">Новые горизонты</p>
-                <p class="slide-text text-right">Начните обучение уже сейчас и станье <br> востребованным профессионалом!</p>
+                <p class="slide-text text-right text-38r">Начните обучение уже сейчас и станье востребованным профессионалом!</p>
             </div>
         </div>
         <div class="controlls" id="controlls">
@@ -355,7 +368,7 @@
         </script>
     </div>
     <div class="dev-footer">
-        <p class="dev-version">v1.04 <span class="dev-subversion">0</span></p>
+        <p class="dev-version">v1.04 <span class="dev-subversion">1</span></p>
         <a class="dev-source" href="https://github.com/KostarSf/web_slider">source</a>
     </div>
 
